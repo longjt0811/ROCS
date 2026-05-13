@@ -492,8 +492,11 @@ def combine_orbits(gpsweek,dow,hr,config):
     start_epoch = (datetime.datetime(year,month,dom,hr,0,0)
                     + datetime.timedelta(seconds=cut_start))
     if solution != 'ultra-rapid':
-        end_epoch = (datetime.datetime(year,month,dom,23,59,59)
-                    - datetime.timedelta(seconds=cut_end))
+        #end_epoch = (datetime.datetime(year,month,dom,23,59,59)
+        #            - datetime.timedelta(seconds=cut_end))
+        end_epoch = (datetime.datetime(year,month,dom,hr,0,0)
+                     + datetime.timedelta(days=1)
+                     - datetime.timedelta(seconds=cut_end))
     else:
         end_epoch = (datetime.datetime(year,month,dom,hr,0,0)
                      + datetime.timedelta(days=2)
@@ -513,6 +516,10 @@ def combine_orbits(gpsweek,dow,hr,config):
                             +str(doy).zfill(3)+str(hr).zfill(2)+'00_'+len_data
                             +'_???_ORB.SP3')
 
+    logger.debug(f"\nLooking for: {subm_weekdir+'/???????'+sol_id+'_'+str(year)
+                            +str(doy).zfill(3)+str(hr).zfill(2)+'00_'+len_data
+                            +'_???_ORB.SP3'}\n")
+    logger.debug(f"\nsp3_subm_all {sp3_subm_all}\n")
     # Get the list of SP3 files to be read
     # If a configuration file is used, use all the weighted and unweighted
     # centers (for at least one satellite); otherwise, use all available
