@@ -53,7 +53,7 @@ campaign:
 
   ac_acronyms:
       COD: "Center for Orbit Determination in Europe (CODE)"
-      EMR: "Natural Resources Canada (NRC)"
+      EMR: "Natural Resources Canada (NRCan)"
       ESA: "European Space Agency"
       GFZ: "GeoForschungsZentrum Potsdam"
       GRG: "Centre National d'Etudes Spatiales (CNES/CLS)"
@@ -105,7 +105,7 @@ orbits:
   sampling: 300
 
   # center weighting method (global/by_constellation/by_block/by_sat)
-  cen_wht_method: by_sat
+  cen_wht_method: by_constellation
 
   # satellite weighting method (RMS_L1)
   sat_wht_method: RMS_L1
@@ -184,36 +184,10 @@ orbits:
     cmb_type: FINAL
 
     # clock source
-    clk_src: cmb
+    clk_src: CMB
 
     # antex file
     antex: IGS20_2317
 
     # ocean tide model
     oload: FES2014b
-
-
-# clock combination configs
-clocks:
-
-  # Analysis center contributions
-  ac_contribs:
-
-    # weighted centers:
-    weighted:
-      systems:
-      prns:
-      svns:
-
-    # unweighted centers (for comparison only)
-    unweighted:
-      systems:
-      prns:
-      svns:
-
-    # excluded centers
-    excluded:
-      systems:
-      prns:
-      svns:
-
