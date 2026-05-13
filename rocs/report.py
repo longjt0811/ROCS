@@ -445,12 +445,9 @@ class OrbitReport:
             sumfull.write(f"{header2}\n")
             sumfull.write(f"{'-'*lenmax}\n")
 
-        if self.campaign == 'demonstration':
-            expt_comment = ("* * * THIS COMBINATION IS STRICTLY EXPERIMENTAL "
-                            "-- USE WITH CAUTION * * *")
-            sumfull.write(f"{expt_comment}\n\n")
-
+        sumfull.write("\n")
         sumfull.write(f" Author: {self.author}\n")
+        sumfull.write(" Software: ROCS Geoscience Australia (https://github.com/GeoscienceAustralia/ROCS)\n")
         sumfull.write(f" Contact: {self.contact}\n\n")
 
         sumdict['header'] = {}
@@ -461,6 +458,7 @@ class OrbitReport:
         sumdict['header']['year'] = self.year
         sumdict['header']['day of year'] = self.doy
         sumdict['header']['author'] = self.author
+        sumdict['header']['software'] = "ROCS Geoscience Australia (https://github.com/GeoscienceAustralia/ROCS)"
         sumdict['header']['contact'] = self.contact
 
         # solution/centers list
@@ -477,6 +475,7 @@ class OrbitReport:
             centers.append("IGV")
 
         sumfull.write(" All AC solutions:\n")
+        ac_acronyms_used = {}
         if solution_names:
             for ac in centers:
                 if ac == "IGV":
@@ -485,8 +484,12 @@ class OrbitReport:
                     sumfull.write(f"  - {ac} = {solution_names[ac]}")
                 if ac in self.ac_acronyms:
                     sumfull.write(f" : {self.ac_acronyms[ac]}\n")
+                    if ac not in ac_acronyms_used:
+                        ac_acronyms_used[ac] = self.ac_acronyms[ac]
                 else:
                     sumfull.write("\n")
+                    if ac not in ac_acronyms_used:
+                        ac_acronyms_used[ac] = ""
         else:
             sumfull.write("  - None\n")
         sumfull.write("\n\n")
@@ -587,7 +590,7 @@ class OrbitReport:
         sumdict['header']['unweighted solutions for comparison'] = self.unweighted_cens
         sumdict['header']['combined solution'] = {}
         sumdict['header']['combined solution'][self.cmb_sp3_filename[0:3]] = self.cmb_sp3_filename
-        sumdict['header']['ac acronyms'] = self.ac_acronyms
+        sumdict['header']['ac acronyms'] = ac_acronyms_used
         sumdict['header']['satellite metadata'] = self.sat_metadata_file.split('/')[-1]
         sumdict['header']['AC weighting method'] = orbcmb.cen_wht_method
         sumdict['header']['orbit interval'] = orb_smp

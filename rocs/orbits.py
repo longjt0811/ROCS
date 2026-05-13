@@ -2969,16 +2969,12 @@ class OrbitComb:
         sp3_combined['header']['time_system'] = 'GPS'
         sp3_combined['header']['base_pos'] = 1.25
         sp3_combined['header']['base_clk'] = 1.025
-        if sp3_header['cmb_type'] == "REPRO3":
-            sp3_combined['header']['comments'] = [
-                    f"{sp3_header['cmb_type']} ORBIT COMBINATION FROM WEIGHTED "
-                    "AVERAGE OF:"]
-        else:
-            sp3_combined['header']['comments'] = [
-                    f"STRICTLY EXPERIMENTAL MULTI-GNSS COMBINATION",
-                    f"{sp3_header['cmb_type']} ORBIT COMBINATION FROM WEIGHTED "
-                    "AVERAGE OF:"]
+        sp3_combined['header']['comments'] = [
+                f"{sp3_header['cmb_type']} ORBIT COMBINATION FROM WEIGHTED "
+                "AVERAGE OF:"]
         sp3_combined['header']['comments'].extend(acnames)
+        sp3_combined['header']['comments'].extend([
+                "ROCS Software Geoscience Australia"])
         sp3_combined['header']['comments'].extend([
                  "REFERENCED TO GPS CLOCK AND TO WEIGHTED MEAN POLE:",
                 f"PCV:{sp3_header['antex']} OL/AL:{sp3_header['oload']} "
